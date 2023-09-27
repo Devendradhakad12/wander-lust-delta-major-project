@@ -4,6 +4,7 @@ const express = require("express");
 const connectToDB = require("./db");
 const { errorHandler, catchErrorHandler } = require("./utils/errorHandler");
 const Listing = require("./models/listing");
+const path = require("path")
 const app = express();
 const PORT = process.env.PORT;
 
@@ -14,26 +15,20 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
+//? ejs setup
+app.set("view engine","ejs")
+app.set("views",path.join(__dirname,"views"))
+app.use(express.json());
 
-app.use(express.json())
-
-app.get("/testlisting",async(req,res,next)=>{
-  let samplelisting = new Listing({
-    title:"my home",
-    description:"by the beatch",
-    price:1220,
-    country:"india",
-    location:"india"
-  })
-try {
-  await samplelisting.save()
-res.status(200).json({samplelisting})
+app.get("/listing", async (req, res, next) => {
  
-
-} catch (err) {
-  catchErrorHandler(res,err,next)
-}
-})
+  try {
+  const data =   await Listing.find({})
+    res.render("listings/index.ejs",{data})
+  } catch (err) {
+    catchErrorHandler(res, err, next);
+  }
+});
 
 app.use(errorHandler);
 app.listen(PORT, () => {
