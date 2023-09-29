@@ -1,3 +1,11 @@
+body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.container{
+  flex: 1;
+}
 .navbar {
   height: 5rem;
   background-color: white;
@@ -63,4 +71,9 @@
 }
 .card-text {
 font-weight: 700;
+}
+.btn{
+  background-color: rgb(126, 97, 234) !important;
+  margin: 1rem 0;
+  color: white !important;
 }
