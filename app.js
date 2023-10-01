@@ -61,7 +61,7 @@ app.get("/listings/:id", async (req, res, next) => {
   try {
     const data = await Listing.findById(id);
     res.render("listings/show.ejs", { data });
-  } catch (error) {
+  } catch (err) {
     catchErrorHandler(res, err, next);
   }
 });
@@ -71,7 +71,7 @@ app.get("/listings/:id/edit", async (req, res, next) => {
   try {
     const data = await Listing.findById(id);
     res.render("listings/edit.ejs", { data });
-  } catch (error) {
+  } catch (err) {
     catchErrorHandler(res, err, next);
   }
 });
@@ -81,7 +81,7 @@ app.put("/listings/:id", async (req, res, next) => {
   try {
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect(`/listings/${id}`);
-  } catch (error) {
+  } catch (err) {
     catchErrorHandler(res, err, next);
   }
 });
@@ -91,7 +91,7 @@ app.delete("/listings/:id", async (req, res, next) => {
   try {
     await Listing.findByIdAndDelete(id);
     res.redirect(`/listings`);
-  } catch (error) {
+  } catch (err) {
     catchErrorHandler(res, err, next);
   }
 });

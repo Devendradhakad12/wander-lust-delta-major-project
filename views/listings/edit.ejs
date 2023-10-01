@@ -1,14 +1,93 @@
 <% layout("/layouts/boilerplate") -%>
 <body>
-    <h1>Edit </h1>
-    <form action="/listings/<%= data._id %>?_method=PUT" method="POST">
-        <input  name="listing[title]" type="text"  value="<%= data.title %>"/>
-        <textarea name="listing[description]" id="desc" cols="30" rows="10"> <%= data.description  %> </textarea>
-        <input name="listing[image]" type="text"  value="<%= data.image %>" />
-        <input name="listing[price]" type="number"  value="<%= data.price %>" />
-        <input name="listing[country]" type="text"  value="<%= data.country %>" />
-        <input name="listing[location]" type="text"  value="<%= data.location %>" />
-        <button type="submit">Update</button>
+  <h1>Edit</h1>
+  
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h3>Create a new Listings</h3>
+      <form action="/listings/<%= data._id %>?_method=PUT" method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-lable"> Title </label>
+          <input
+            name="listing[title]"
+            value="<%= data.title %>"
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Add catchy title"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-lable">Description</label>
+          <textarea
+            name="listing[description]"
+            class="form-control"
+            id="description"
+            cols="30"
+            rows="10"
+          > <%= data.description  %></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="image">Image Link</label>
+          <input
+            name="listing[image]"
+            value="<%= data.image %>" 
+            type="text"
+            placeholder="Enter image url/link"
+            class="form-control"
+            id="image"
+          />
+        </div> 
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price">Price</label>
+            <input
+              name="listing[price]"
+              value="<%= data.price %>" 
+              id="price"
+              class="form-control"
+              type="number"
+              placeholder="Price"
+            />
+          </div>
+
+          <div class="mb-3 col-md
+          -8">
+            <label for="country" class="form-lable">Country</label>
+            <input
+              name="listing[country]"
+              value="<%= data.country %>" 
+              id="country"
+              class="form-control"
+              type="text"
+              placeholder="Country"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location">Location</label>
+          <input
+            name="listing[location]"
+            value="<%= data.location %>" 
+            id="location"
+            class="form-control"
+            type="text"
+            placeholder="Location"
+          />
+        </div>
+        <button type="submit" class="btn">Update</button>
       </form>
-</body>
+    </div>
+  </div>
  
+ 
+ 
+   
+ 
+ 
+ 
+ 
+</body>

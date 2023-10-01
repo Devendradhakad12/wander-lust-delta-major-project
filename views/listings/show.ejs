@@ -1,17 +1,32 @@
 <% layout("/layouts/boilerplate") -%>
 <body>
-    <h3>Listing Details</h3>
-    <ul>
-        <li><%= data.title %></li>
-        <li><%= data.description %></li>
-        <li>&#8377;<%= data.price.toLocaleString("en-IN") %></li>
-        <li><%= data.location %></li>
-        <li><%= data.country %></li>
-    </ul>
-    <br>
-    <a href="/listings/<%= data._id %>/edit"> Edit </a>
-    <form method="POST" action="/listings/<%= data._id %>?_method=DELETE">
-        <button>Delete</button>
-    </form>
+  <div class="row mt-4">
+    <div class="col-8 offset-2">
+      <h3>Listing Details</h3>
+      <div class="card" style="width: 18rem">
+        <img src="<%= data.image %>" class="card-img-top" alt="img" />
+        <div class="card-body">
+          <h2 class="card-text"><%=  data.title %></h3>
+          <p class="card-text"><%= data.description %></p>
+          <p class="card-text">&#8377;<%= data.price.toLocaleString("en-IN") %></p>
+          <p class="card-text"><%= data.location %></p>
+          <p class="card-text"><%= data.country %></p>
+      
+        <div class="btns">
+            <a href="/listings/<%= data._id %>/edit" class="btn"> Edit </a>
+            <form method="POST" action="/listings/<%= data._id %>?_method=DELETE">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        </div>
+      </div>
+     
+        
+
+        
+   
+   
+   
+    </div>
+  </div>
 </body>
- 

@@ -59,6 +59,7 @@ body{
 .card{
   border: none !important;
   margin-bottom: 2rem;
+  width: 400px !important;
 }
 .card-img-top{
   border-radius: 1rem !important;
@@ -76,4 +77,8 @@ font-weight: 700;
   background-color: rgb(126, 97, 234) !important;
   margin: 1rem 0;
   color: white !important;
+}
+.btns{
+  display: flex;
+  gap: 20px;
 }
