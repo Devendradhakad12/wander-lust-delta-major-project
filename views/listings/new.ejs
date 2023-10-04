@@ -1,9 +1,9 @@
 <% layout("/layouts/boilerplate") -%>
-<body>
+ 
   <div class="row">
     <div class="col-8 offset-2">
       <h3>Create a new Listings</h3>
-      <form action="/listings" method="POST">
+      <form action="/listings" method="POST" novalidate class="needs-validation">
         <div class="mb-3">
           <label for="title" class="form-lable"> Title </label>
           <input
@@ -12,7 +12,10 @@
             class="form-control"
             id="title"
             placeholder="Add catchy title"
+            required
           />
+          <div class="valid-feedback">Title Looks Good</div>
+          <div class="invalid-feedback">Please Enter Title</div>
         </div>
 
         <div class="mb-3">
@@ -23,7 +26,10 @@
             id="description"
             cols="30"
             rows="10"
+            required
           ></textarea>
+          <div class="valid-feedback">Description Looks Good</div>
+          <div class="invalid-feedback">Please Enter Description</div>
         </div>
 
         <div class="mb-3">
@@ -34,6 +40,7 @@
             placeholder="Enter image url/link"
             class="form-control"
             id="image"
+            required
           />
         </div> 
         <div class="row">
@@ -45,7 +52,10 @@
               class="form-control"
               type="number"
               placeholder="Price"
+              required
             />
+            <div class="valid-feedback">Price Looks Good</div>
+            <div class="invalid-feedback">Please Enter Price</div>
           </div>
 
           <div class="mb-3 col-md
@@ -57,7 +67,10 @@
               class="form-control"
               type="text"
               placeholder="Country"
+              required
             />
+            <div class="valid-feedback">Country Looks Good</div>
+            <div class="invalid-feedback">Please Enter Country</div>
           </div>
         </div>
 
@@ -69,10 +82,14 @@
             class="form-control"
             type="text"
             placeholder="Location"
+            required
           />
+          <div class="valid-feedback">Location Looks Good</div>
+          <div class="invalid-feedback">Please Enter Location</div>
         </div>
         <button type="submit" class="btn">Add</button>
       </form>
     </div>
   </div>
-</body>
+
+ 

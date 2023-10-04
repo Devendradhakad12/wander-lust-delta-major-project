@@ -4,6 +4,9 @@ const ListSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "Title is Required"],
+    minLength:[4,"Title Must be 4 charactor"],
+    maxLength:[15,"Title Should be minimum 15 charactor"],
+
   },
   description: {
     type: String,
@@ -18,6 +21,7 @@ const ListSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: [true, "Price is Required"],
+    //min:[0,"Price not should be nagative"]
   },
   location: {
     type: String,

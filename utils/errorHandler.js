@@ -11,25 +11,21 @@
   const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
   const statusCode = err.status || 500;
-  res.status(statusCode).json({
-    error: {
-      message: err.message || "Internal Server Error",
-    },
-  });
+  const message =  err.message
+  res.status(statusCode).render("error.ejs",{message})
+
 };
 
 const catchErrorHandler = (res, err, next) => {
     //* Try Catch error Handler
     // wrong mongo db id
     if (err.name == "CastError") {
-      const message = `Resource not found. Invailid: ${err.path}`;
-      return next(createError(500, "Cast Error"));
+      const message = `Invailid: ${err.path}`;
+      return next(createError(500, message));
     }
     // validation error
     else if (err.name === "ValidationError") {
-      return res
-        .status(400)
-        .json({ error: "Validation error", message: err.message });
+      return next(createError(400,err.message))
     }
     // mongoose duplicate key error
     else if (err.code === 11000) {
@@ -52,4 +48,13 @@ const catchErrorHandler = (res, err, next) => {
       next(err);
     }
   };
-module.exports = {catchErrorHandler,errorHandler,createError}
+  
+  
+  // wrapAsync
+  function wrapAcync(func) {
+    return function(req,res,next){
+      func(req,res,next).catch((err)=> catchErrorHandler(res,err,next) )
+    }
+  }
+  
+  module.exports = {catchErrorHandler,errorHandler,createError,wrapAcync}
