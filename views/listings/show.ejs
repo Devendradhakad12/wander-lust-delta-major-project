@@ -77,6 +77,9 @@
                   <% } %>
                   <span class="ratingsInput"> <%= review.rating %></span>
                 </div>
+                <form method="POST" action="/listings/<%= data._id %>/reviews/<%= review._id %>?_method=DELETE">
+                  <button class="btn" type="submit">Delete</button>
+                </form>
               </div>
             </div>
             <% } %>
