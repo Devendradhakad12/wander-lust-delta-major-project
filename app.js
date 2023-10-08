@@ -8,13 +8,14 @@ const {
   wrapAcync,
   createError,
 } = require("./utils/errorHandler");
-const Listing = require("./models/listing");
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT;
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const { listingSchema } = require("./schema.js");
+const Listing = require("./models/listing.js");
+const Reviews = require("./models/review.js");
 
 //* Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -74,13 +75,13 @@ app.get(
   "/listings/:id",
   wrapAcync(async (req, res, next) => {
     let { id } = req.params;
-    const data = await Listing.findById(id);
+    const data = await Listing.findById(id).populate('reviews');
     res.render("listings/show.ejs", { data });
   })
 );
 // edit Route
 app.get(
-  "/listings/:id/edit",validationListing,
+  "/listings/:id/edit",
   wrapAcync(async (req, res, next) => {
     let { id } = req.params;
     const data = await Listing.findById(id);
@@ -90,6 +91,7 @@ app.get(
 // update Route
 app.put(
   "/listings/:id",
+  validationListing,
   wrapAcync(async (req, res, next) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
@@ -105,9 +107,25 @@ app.delete(
     res.redirect(`/listings`);
   })
 );
+
+// add reviews route
+app.post(
+  "/listings/:id/reviews",
+  wrapAcync(async (req, res, next) => {
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Reviews(req.body.review);
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${req.params.id}`);
+  })
+);
+
+// if page not avilable
 app.all("*", (req, res, next) => {
   next(createError(404, "Page Not Found"));
 });
+
 app.use(errorHandler);
 app.listen(PORT, () => {
   connectToDB(process.env.MONGODB_URI);
