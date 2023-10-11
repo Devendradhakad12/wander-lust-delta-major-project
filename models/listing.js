@@ -25,7 +25,7 @@ const ListSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: [true, "Price is Required"],
-    //min:[0,"Price not should be nagative"]
+    min: [0, "Price not should be nagative"],
   },
   location: {
     type: String,
@@ -44,9 +44,9 @@ const ListSchema = new mongoose.Schema({
 });
 
 ListSchema.post("findOneAndDelete", async (listing) => {
-if(listing){
-  await Reviews.deleteMany({_id:{$in:listing.reviews}})
-}
+  if (listing) {
+    await Reviews.deleteMany({ _id: { $in: listing.reviews } });
+  }
 });
 
 const Listing = mongoose.model("Listing", ListSchema);
