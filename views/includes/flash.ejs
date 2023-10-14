@@ -1,0 +1,29 @@
+<% if(success.length) { %>
+<div
+  class="alert alert-success alert-dismissable fade show col-6 offset-3"
+  role="alert"
+  style="margin-top: 30px; display: flex; justify-content: space-between"
+>
+  <%= success %>
+  <button
+    type="button"
+    class="btn-close flex-end"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<% } %> <% if(error.length) { %>
+<div
+  class="alert alert-danger alert-dismissable fade show col-6 offset-3"
+  role="alert"
+  style="margin-top: 30px; display: flex; justify-content: space-between"
+>
+  <%= error %>
+  <button
+    type="button"
+    class="btn-close flex-end"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<% } %>
