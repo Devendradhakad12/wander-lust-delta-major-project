@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Reviews = require("./review.js");
 
 const ListSchema = new mongoose.Schema({
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   title: {
     type: String,
     required: [true, "Title is Required"],

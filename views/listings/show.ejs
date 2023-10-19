@@ -8,12 +8,16 @@
         <div class="card-body">
           <h2 class="card-text"><%= data.title %></h2>
           <p class="card-text"><%= data.description %></p>
+
           <p class="card-text">
             &#8377;<%= data.price.toLocaleString("en-IN") %>
           </p>
           <p class="card-text"><%= data.location %></p>
           <p class="card-text"><%= data.country %></p>
+          <p class="card-text">Owner : <%= data?.owner?.username %></p>
 
+          <!-- Edit and delete buttons -->
+          <% if(loggdinUser?._id.equals(data.owner._id)){ %>
           <div class="btns">
             <a href="/listings/<%= data._id %>/edit" class="btn"> Edit </a>
             <form
@@ -23,11 +27,13 @@
               <button class="btn btn-danger">Delete</button>
             </form>
           </div>
+          <% } %>
 
+          <!--  Add Review Form -->
           <div class="col-8 offset-1">
             <hr />
+            <% if(loggdinUser){ %>
             <h4>Leave a Review</h4>
-
             <form
               method="POST"
               action="/listings/<%= data._id %>/reviews"
@@ -60,13 +66,15 @@
               </div>
               <button type="submit" class="btn btn-outline-dark">Submit</button>
             </form>
-
             <hr />
+            <% } %>
+
+            <!-- All Reviews -->
             <h4>All Reviews</h4>
             <% for(review of data.reviews){ %>
             <div class="card reviewCard mb-3">
               <div class="card-body reviewCardBody">
-                <h5 class="card-title">Dev</h5>
+                <h5 class="card-title"><%= review?.author?.username %></h5>
                 <p class="card-text"><%= review.comment %></p>
 
                 <div id="rating1" class="star-rating">
@@ -77,9 +85,16 @@
                   <% } %>
                   <span class="ratingsInput"> <%= review.rating %></span>
                 </div>
-                <form method="POST" action="/listings/<%= data._id %>/reviews/<%= review._id %>?_method=DELETE">
+
+                <!-- only review other can see review delete button -->
+                <% if(loggdinUser?._id.equals(review?.author?._id)){ %>
+                <form
+                  method="POST"
+                  action="/listings/<%= data._id %>/reviews/<%= review._id %>?_method=DELETE"
+                >
                   <button class="btn" type="submit">Delete</button>
                 </form>
+                <% } %>
               </div>
             </div>
             <% } %>
