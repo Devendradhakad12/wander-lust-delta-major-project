@@ -3,10 +3,11 @@ const Listing = require("../models/listing.js");
 const Reviews = require("../models/review.js");
 const router = express.Router({ mergeParams: true });
 const { wrapAcync } = require("../utils/errorHandler.js");
+const { isLoggedIn } = require("../middleware/middleware.js");
 
 // add reviews route
 router.post(
-  "/",
+  "/",isLoggedIn,
   wrapAcync(async (req, res, next) => {
     let listing = await Listing.findById(req.params.id);
     let newReview = new Reviews(req.body.review);
@@ -18,7 +19,7 @@ router.post(
   })
 );
 router.delete(
-  "/:reviewid",
+  "/:reviewid",isLoggedIn,
   wrapAcync(async (req, res, next) => {
     let id = req.params.id;
     let reviewid = req.params.reviewid;

@@ -7,6 +7,7 @@
     createError,
   } = require("../utils/errorHandler.js");
   const { listingSchema } = require("../schema.js");
+const { isLoggedIn } = require('../middleware/middleware.js');
 
   //* schema validation using joi
 const validationListing = (req, res, next) => {
@@ -30,9 +31,10 @@ const validationListing = (req, res, next) => {
 
   // New Route
   router.get(
-    "/new",
+    "/new",isLoggedIn ,
     wrapAcync(async (req, res, next) => {
-      res.render("listings/new.ejs");
+   
+    res.render("listings/new.ejs");
     })
   );
 
@@ -65,7 +67,7 @@ router.post(
   );
   // edit Route
   router.get(
-    "/:id/edit",
+    "/:id/edit", isLoggedIn,
     wrapAcync(async (req, res, next) => {
       let { id } = req.params;
       const data = await Listing.findById(id);
@@ -85,7 +87,7 @@ router.post(
   );
   // delete Route
   router.delete(
-    "/:id",
+    "/:id",  isLoggedIn,
     wrapAcync(async (req, res, next) => {
       let { id } = req.params;
       await Listing.findByIdAndDelete(id);
