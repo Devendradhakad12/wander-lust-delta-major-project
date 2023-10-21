@@ -4,7 +4,7 @@
     <div class="col-8 offset-2">
       <h3>Listing Details</h3>
       <div class="card card-listing" style="width: 18rem">
-        <img src="<%= data.image %>" class="card-img-top" alt="img" />
+        <img src="<%= data?.image?.url %>" class="card-img-top" alt="img" />
         <div class="card-body">
           <h2 class="card-text"><%= data.title %></h2>
           <p class="card-text"><%= data.description %></p>
@@ -40,18 +40,57 @@
               novalidate
               class="needs-validation"
             >
+              <!--  give ratings -->
               <div>
                 <label for="rating" class="form-label">Rating</label>
-                <input
-                  type="range"
-                  min="1"
-                  max="5"
-                  id="rating"
-                  name="review[rating]"
-                  class="form-range"
-                  required
-                />
+                <fieldset class="starability-slot">
+                  <input
+                    type="radio"
+                    id="no-rate"
+                    class="input-no-rate"
+                    name="review[rating]"
+                    value="1"                  
+                    checked
+                    aria-label="No rating."
+                  />
+                  <input
+                    type="radio"
+                    id="first-rate1"
+                    name="review[rating]"
+                    value="1"
+                  />
+                  <label for="first-rate1" title="Terrible">1 star</label>
+                  <input
+                    type="radio"
+                    id="first-rate2"
+                    name="review[rating]"
+                    value="2"
+                  />
+                  <label for="first-rate2" title="Not good">2 stars</label>
+                  <input
+                    type="radio"
+                    id="first-rate3"
+                    name="review[rating]"
+                    value="3"
+                  />
+                  <label for="first-rate3" title="Average">3 stars</label>
+                  <input
+                    type="radio"
+                    id="first-rate4"
+                    name="review[rating]"
+                    value="4"
+                  />
+                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <input
+                    type="radio"
+                    id="first-rate5"
+                    name="review[rating]"
+                    value="5"
+                  />
+                  <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
               </div>
+
               <div>
                 <label for="comment" class="form-label"> Comment</label>
                 <textarea
@@ -75,18 +114,21 @@
             <div class="card reviewCard mb-3">
               <div class="card-body reviewCardBody">
                 <h5 class="card-title"><%= review?.author?.username %></h5>
-                <p class="card-text"><%= review.comment %></p>
 
+                <!--  show rating -->
                 <div id="rating1" class="star-rating">
                   <% for (let j = 1; j <= 5; j++) { %>
                   <span
                     class="fa fa-star <%= j <= review.rating ? 'checked' : '' %>"
                   ></span>
                   <% } %>
-                  <span class="ratingsInput"> <%= review.rating %></span>
                 </div>
 
-                <!-- only review other can see review delete button -->
+                <!-- show comment -->
+
+                <p class="card-text"><%= review.comment %></p>
+
+                <!-- only review author can see review delete button -->
                 <% if(loggdinUser?._id.equals(review?.author?._id)){ %>
                 <form
                   method="POST"

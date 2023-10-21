@@ -18,13 +18,8 @@ const ListSchema = new mongoose.Schema({
   },
 
   image: {
-    type: String,
-    default:
-      "https://images.unsplash.com/photo-1533984899405-a7d715bac484?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNlZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-    set: (v) =>
-      v === ""
-        ? "https://images.unsplash.com/photo-1533984899405-a7d715bac484?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNlZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
-        : v,
+    url: String,
+    filename: String,
   },
   price: {
     type: Number,

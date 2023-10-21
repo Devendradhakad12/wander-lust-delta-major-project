@@ -5,7 +5,7 @@
  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
   <% for(let listing of data){ %>
     <div class="card card-listing col" style="width: 18rem;">
-      <img src="<%= listing.image %>" class="card-img-top" alt="...">
+      <img src="<%= listing?.image?.url %>" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title"><%= listing.title %></h5>
         <p class="card-text"> &#8377; <%= listing.price.toLocaleString("en-IN") %> /night </p>
