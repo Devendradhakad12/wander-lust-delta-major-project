@@ -22,6 +22,7 @@ const {
   editListing,
   updateListing,
   deleteListing,
+ 
 } = require("../controllers/listing.js");
 
 //Index Route // create route
@@ -42,10 +43,14 @@ router.get("/new", isLoggedIn, wrapAcync(renderForm));
 router
   .route("/:id")
   .get(wrapAcync(showListing))
-  .put(isOwner, validationListing, wrapAcync(updateListing))
+  .put(isOwner, upload.single("listing[image]"), wrapAcync(updateListing))
   .delete(isLoggedIn, isOwner, wrapAcync(deleteListing));
 
 // edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAcync(editListing));
+
+// map data
+
+ 
 
 module.exports = router;

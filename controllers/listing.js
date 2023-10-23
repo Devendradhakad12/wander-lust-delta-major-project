@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const axios = require("axios");
 
 // Index
 module.exports.index = async (req, res, next) => {
@@ -44,13 +45,25 @@ module.exports.showListing = async (req, res, next) => {
 module.exports.editListing = async (req, res, next) => {
   let { id } = req.params;
   const data = await Listing.findById(id);
-  res.render("listings/edit.ejs", { data });
+  if (!data) {
+    req.flash("error", "Listing does not exists");
+    res.redirect("/listings");
+  }
+  let originalImageUrl = data.image.url;
+  let imageurl = originalImageUrl.replace("/upload", "/upload/w_250");
+
+  res.render("listings/edit.ejs", { data, imageurl });
 };
 
 // update listing - update listing
 module.exports.updateListing = async (req, res, next) => {
   let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  if (typeof req.file !== "undefined") {
+    let { path, filename } = req.file;
+    listing.image = { url: path, filename };
+    await listing.save();
+  }
   req.flash("success", "Listing Updated");
   res.redirect(`/listings/${id}`);
 };
@@ -62,3 +75,5 @@ module.exports.deleteListing = async (req, res, next) => {
   req.flash("success", "Listing Deleted");
   res.redirect(`/listings`);
 };
+
+ 
