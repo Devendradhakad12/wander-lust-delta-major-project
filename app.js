@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV != "production"){
+if (process.env.NODE_ENV != "production") {
   const dotenv = require("dotenv");
   dotenv.config();
 }
@@ -17,6 +17,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const MngoStrore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -24,6 +25,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
+const MongoStore = require("connect-mongo");
 
 //* Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -45,7 +47,18 @@ app.use(flash());
 
 //! PassPost implementation
 
+const store = MongoStore.create({
+  mongoUrl: process.env.MONGODB_URI,
+  crypto: {
+    secret: "mytempsecretcode",
+  },
+  touchAfter:24 * 3600
+});
+store.on("error",(err)=>{
+  console.log("ERROR_MONGO_SESSION_STORE",err)
+})
 const sessionOptions = {
+  store,
   secret: "mytempsecretcode",
   resave: "false",
   saveUninitialized: true,
@@ -55,6 +68,7 @@ const sessionOptions = {
     httpOnly: true,
   },
 };
+
 
 app.use(session(sessionOptions));
 app.use(passport.initialize());
@@ -77,8 +91,6 @@ app.get("/", (req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/auth", userRouter);
-
-
 
 //! if page not avilable
 app.all("*", (req, res, next) => {
