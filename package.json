@@ -1,6 +1,6 @@
 {
   "engines":{
-    "node":"19.6.0"
+    "node":"16.13.0"
   },
   "name": "wander_lust_delta",
   "version": "1.0.0",
